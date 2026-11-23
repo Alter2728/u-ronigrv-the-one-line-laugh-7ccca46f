@@ -6,6 +6,7 @@ bytes are written on every run.
 """
 
 import os
+from pathlib import Path
 
 # Draft: "I bought a planner to become a morning person, and now I
 # use it to plan when I will hit snooze in the morning."
@@ -19,10 +20,9 @@ LINE = (
 
 
 def main() -> None:
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-        f.write(LINE)
+    out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "entry.txt").write_text(LINE, encoding="utf-8")
 
 
 if __name__ == "__main__":
